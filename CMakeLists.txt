@@ -12,7 +12,7 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/OpenHD/OpenHD.git
     GIT_TAG        6360d3f719121ac9f840bbeb25f12225e44626f7
 )
-FetchContent_Populate(OpenHD)
+FetchContent_MakeAvailable(OpenHD)
 set(OPENHD_SOURCE_DIR "${openhd_SOURCE_DIR}")
 set(OPENHD_BINARY_DIR "${openhd_BINARY_DIR}")
 

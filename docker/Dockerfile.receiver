@@ -1,0 +1,26 @@
+FROM audio-stream-builder AS builder
+
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-tools \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    git \
+    curl \
+    build-essential \
+    libpcap-dev
+
+RUN curl -sSL https://download.libsodium.org/libsodium/releases/libsodium-1.0.18.tar.gz | tar xz -C /tmp
+RUN cd /tmp/libsodium-1.0.18 && \
+    ./configure --prefix=/usr && \
+    env CFLAGS="$CFLAGS -march=armv8-a+crypto+aes" \
+    make && \
+    make check && \
+    make install && \
+    ldconfig
+
+COPY --from=builder /app/build/open-audio-receiver /usr/local/bin/receiver
+
+ENTRYPOINT ["/usr/local/bin/receiver"]

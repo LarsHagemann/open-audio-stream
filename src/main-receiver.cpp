@@ -25,7 +25,7 @@ int main() {
   OHDInterface::generate_keys_from_pw_if_exists_and_delete();
 
   link_handle->m_audio_data_rx_cb = [](const uint8_t* data, int data_len) {
-    std::cout << "Received audio data of length: " << data_len << '\n';
+    /* TODO: create audio source from incoming data */
   };
 
   signal(SIGTERM, [](int sig) {
